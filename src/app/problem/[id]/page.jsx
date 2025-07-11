@@ -8,29 +8,70 @@ import Markdown from "react-markdown";
 import Example from "../example";
 import Constraint from "../constraint";
 import Testcase from "../testcase";
+import axios from "axios";
+import ViewSubmissionsButton from "../../components/ViewSubmissionsButton";
 
 export default function ProblemPage({ params }) {
   const [problem, setProblem] = useState(null);
   const [code, setCode] = useState(problem?.defaultCode);
   const [testcases, setTestcases] = useState(problem?.testcases);
+  const [user, setUser] = useState(123);
+  const [submissionId, setSubmissionId] = useState(null);
+  const [evaluationAvailable, setEvaluationAvailable] = useState(false);
 
   useEffect(() => {
     setProblem(problem1);
     setCode(problem1.defaultCode);
-    setTestcases(problem1.testcases)
+    setTestcases(problem1.testcases);
   }, []);
 
   function resetCode() {
     setCode(problem?.defaultCode);
   }
 
+  async function handleSubmitCode() {
+    const data = {
+      userId: user,
+      problemId: problem.id,
+      mode: "run",
+      //handle testcases properly for submit case
+      testcases: testcases,
+      function_name: problem.function_name,
+      params_types: problem.param_types,
+      return_type: problem.return_type,
+      code: code,
+      time_limit: 10000,
+      memory_limit: problem.memory_limit,
+    };
+
+    let response = await axios.post(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/check_code`,
+      data
+    );
+
+    if (response.status === 200) {
+      setSubmissionId(response.data.submissionId);
+      console.log(response.data.submissionId);
+    }
+
+    setInterval(() => {
+      console.log('fetching')
+    }, 2000)
+  }
+
   return (
     <div className="h-screen bg-slate-900 flex flex-col">
       <div className="flex justify-between items-center py-4">
         <div className="mx-8 text-2xl">LeetClone</div>
-        <div className="flex mr-8 gap-x-8">
+        <div className="flex mr-8 gap-x-8 items-center">
+          
           <button className="border px-4 py-1 rounded">Run</button>
-          <button className="border px-4 py-1 rounded">Submit</button>
+          <button
+            className="border px-4 py-1 rounded"
+            onClick={handleSubmitCode}
+          >
+            Submit
+          </button>
           <button className="border px-4 py-1 rounded" onClick={resetCode}>
             Reset
           </button>
@@ -108,3 +149,5 @@ export default function ProblemPage({ params }) {
     </div>
   );
 }
+
+export { ViewSubmissionsButton };
