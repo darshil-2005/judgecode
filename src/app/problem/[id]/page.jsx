@@ -40,7 +40,7 @@ export default function ProblemPage({ params }) {
       params_types: problem.param_types,
       return_type: problem.return_type,
       code: code,
-      time_limit: 10000,
+      time_limit: 2000,
       memory_limit: problem.memory_limit,
     };
 
