@@ -1,0 +1,23 @@
+{
+  "name": "@leetclone/backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "scripts": {
+    "db:generate": "drizzle-kit generate",
+    "db:push": "drizzle-kit push"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "bullmq": "^5.56.3",
+    "dotenv": "^17.2.0",
+    "drizzle-orm": "^0.44.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "drizzle-kit": "^0.31.4"
+  }
+}
