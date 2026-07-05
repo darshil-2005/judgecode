@@ -42,7 +42,7 @@ Create a `.env.local` file in the root directory (and copy it to `frontend/.env.
 JWT_SECRET='your_super_secret_jwt_key'
 BASE_URL=http://localhost:3000
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
-DATABASE_URL=postgres://postgres:postgres@localhost:5433/leetclone
+DATABASE_URL=postgres://postgres:postgres@localhost:5433/judgecode
 ```
 
 ### 3. Build the Docker Runner Image
