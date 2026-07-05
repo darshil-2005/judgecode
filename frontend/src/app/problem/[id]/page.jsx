@@ -77,6 +77,14 @@ int main() {
   const [tab, setTab] = useState("problem");
   const [checkingCode, setCheckingCode] = useState(false);
   const [pastSubmissions, setPastSubmissions] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     async function checkAuth() {
@@ -189,7 +197,6 @@ int main() {
 
   async function handleExecuteCode(mode) {
     if (!user) {
-      alert("You must be logged in to run or submit code!");
       router.push("/login");
       return;
     }
@@ -257,11 +264,24 @@ int main() {
 
  text-white flex flex-col">
 
-      <div className="flex justify-between items-center py-4 px-8 border-b border-white/5 bg-black/20 z-1">
-        <Link href="/problems" className="text-3xl tracking-widest font-semibold hover:opacity-85 transition-opacity">
-          JudgeCode
-        </Link>
-        <div className="flex gap-4 items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center py-4 px-4 sm:px-8 border-b border-white/5 bg-black/20 z-1 gap-4 md:gap-0">
+        <div className="flex items-center gap-4 sm:gap-8">
+          <Link href="/problems" className="text-3xl tracking-widest font-semibold hover:opacity-85 transition-opacity">
+            JudgeCode
+          </Link>
+          <div className="hidden md:flex items-center gap-6 ml-4">
+            <Link href="/" className="text-gray-300 hover:text-white transition-colors font-semibold">
+              Home
+            </Link>
+            <Link href="/problems" className="text-gray-300 hover:text-white transition-colors font-semibold">
+              Problems
+            </Link>
+            <Link href="/profile" className="text-gray-300 hover:text-white transition-colors font-semibold">
+              Profile
+            </Link>
+          </div>
+        </div>
+        <div className="flex gap-2 sm:gap-4 items-center flex-wrap justify-center w-full md:w-auto">
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
@@ -296,7 +316,7 @@ int main() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-hidden rounded-xl p-2">
-        <PanelGroup direction="horizontal" className="h-full">
+        <PanelGroup direction={isMobile ? "vertical" : "horizontal"} className="h-full">
           <Panel className="flex-1">
             <div className=" border rounded-md mx-4 h-8 flex justify-evenly">
               <button
@@ -498,7 +518,7 @@ int main() {
               </div>
             )}
           </Panel>
-          <PanelResizeHandle className="h-24 my-auto mx-1 w-1 rounded-2xl bg-gray-300 hover:bg-sky-600 hover:h-full transition-colors" />
+          <PanelResizeHandle className={`rounded-2xl bg-gray-300 hover:bg-sky-600 transition-colors mx-1 ${isMobile ? 'w-24 h-1 my-1 mx-auto hover:w-full' : 'h-24 w-1 my-auto hover:h-full'}`} />
           {/* Monaco Editor */}
           <Panel className="flex-1">
             <PanelGroup direction="vertical" className="w-full">

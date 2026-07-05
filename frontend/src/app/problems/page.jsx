@@ -54,15 +54,19 @@ export default function ProblemsDashboard() {
     <div className="min-h-screen bg-[radial-gradient(ellipse_at_center,_#14001f,_#0c0015,_#000000)] text-white flex flex-col">
       {/* Navigation header */}
       <header className="flex justify-between items-center py-5 px-8 border-b border-white/5 backdrop-blur-md bg-black/20 z-10">
-        <Link href="/" className="text-3xl tracking-widest font-semibold hover:opacity-85 transition-opacity">
+        <Link href="/" className="text-2xl sm:text-3xl tracking-widest font-semibold hover:opacity-85 transition-opacity">
           JudgeCode
         </Link>
-        <div className="flex items-center gap-6">
-          <Link href="/" className="text-gray-300 hover:text-white transition-colors">
+        <div className="flex items-center gap-4 sm:gap-6">
+          <Link href="/" className="text-gray-300 hover:text-white transition-colors font-semibold text-sm sm:text-base">
             Home
           </Link>
+          <div className="hidden sm:block h-4 w-px bg-white/20"></div>
+          <span className="hidden sm:inline text-gray-400 font-mono text-sm">Dashboard</span>
           <div className="h-4 w-px bg-white/20"></div>
-          <span className="text-gray-400 font-mono text-sm">Dashboard</span>
+          <Link href="/profile" className="text-gray-300 hover:text-white transition-colors font-semibold text-sm sm:text-base">
+            Profile
+          </Link>
         </div>
       </header>
 
@@ -78,7 +82,7 @@ export default function ProblemsDashboard() {
             </p>
           </div>
 
-          <div className="flex gap-4 items-center self-start md:self-end">
+          <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center self-start md:self-end w-full sm:w-auto">
             <Link
               href="/create-problem"
               className="bg-white/10 hover:bg-white/15 border border-white/10 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-all shadow-md"
@@ -87,7 +91,7 @@ export default function ProblemsDashboard() {
             </Link>
 
             {/* Filters */}
-            <div className="flex gap-2 bg-black/40 p-1 border border-white/5 rounded-lg w-fit">
+            <div className="flex flex-wrap gap-2 bg-black/40 p-1 border border-white/5 rounded-lg w-full sm:w-fit">
               {["all", "easy", "medium", "hard"].map((level) => (
                 <button
                   key={level}
@@ -112,8 +116,8 @@ export default function ProblemsDashboard() {
         )}
 
         {/* Problems List Table */}
-        <div className="bg-black/30 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-          <table className="w-full text-left border-collapse">
+        <div className="bg-black/30 backdrop-blur-xl border border-white/5 rounded-2xl overflow-x-auto shadow-2xl">
+          <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
               <tr className="border-b border-white/5 bg-white/5">
                 <th className="p-5 font-semibold text-gray-300 text-sm uppercase tracking-wider w-16 text-center">ID</th>

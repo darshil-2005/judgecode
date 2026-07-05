@@ -49,11 +49,29 @@ export default function ProfilePage() {
   const { user, stats, recentSubmissions, authoredProblems } = profileData;
 
   return (
-    <div className="min-h-screen text-white py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="min-h-screen bg-[radial-gradient(ellipse_at_center,_#14001f,_#0c0015,_#000000)] text-white flex flex-col">
+      {/* Navigation Header */}
+      <header className="flex justify-between items-center py-5 px-4 sm:px-8 border-b border-white/5 backdrop-blur-md bg-black/20 z-10">
+        <Link href="/" className="text-2xl sm:text-3xl tracking-widest font-semibold hover:opacity-85 transition-opacity">
+          JudgeCode
+        </Link>
+        <div className="flex items-center gap-4 sm:gap-6">
+          <Link href="/" className="text-gray-300 hover:text-white transition-colors font-semibold text-sm sm:text-base">
+            Home
+          </Link>
+          <div className="hidden sm:block h-4 w-px bg-white/20"></div>
+          <Link href="/problems" className="text-gray-300 hover:text-white transition-colors font-semibold text-sm sm:text-base">
+            Problems
+          </Link>
+          <div className="h-4 w-px bg-white/20"></div>
+          <span className="hidden sm:inline text-gray-400 font-mono text-sm">Profile</span>
+        </div>
+      </header>
+
+      <div className="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-8 space-y-8 mt-4 z-1">
         
         {/* Header Section */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl flex items-center space-x-6">
+        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 sm:p-8 shadow-xl flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6 text-center sm:text-left">
           <div className="h-24 w-24 rounded-full bg-gradient-to-tr from-fuchsia-600 to-purple-600 flex items-center justify-center text-4xl font-bold shadow-lg border-2 border-white/20">
             {user.name.charAt(0).toUpperCase()}
           </div>
@@ -66,7 +84,7 @@ export default function ProfilePage() {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           <StatCard title="Total Submissions" value={stats.totalSubmissions} icon="📝" />
           <StatCard title="Accepted" value={stats.acceptedSubmissions} icon="✅" color="text-emerald-400" />
           <StatCard title="Acceptance Rate" value={`${stats.acceptanceRate}%`} icon="📊" color="text-sky-400" />

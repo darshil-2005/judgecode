@@ -33,7 +33,8 @@ export async function GET(req) {
     // 1. Fetch User Info
     const userRows = await db.select().from(users).where(eq(users.id, userId)).limit(1);
     if (userRows.length === 0) {
-      return Response.json({ error: 'User not found' }, { status: 404 });
+      // If the user doesn't exist in DB anymore, their token is invalid
+      return Response.json({ error: 'User not found' }, { status: 401 });
     }
     const user = userRows[0];
 

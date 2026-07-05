@@ -1,4 +1,4 @@
-const { db, submit_testcases, submissionsQueue } = require("@judgecode/backend");
+const { db, users, submit_testcases, submissionsQueue } = require("@judgecode/backend");
 const { eq } = require("drizzle-orm");
 const { v4: uuid4 } = require("uuid");
 const jwt = require("jsonwebtoken");
@@ -40,6 +40,9 @@ export async function POST(req) {
     }
 
     const userId = user.userId;
+    const userRows = await db.select().from(users).where(eq(users.id, userId)).limit(1);
+    if (userRows.length === 0) return Response.json({ error: 'User not found' }, { status: 401 });
+
     const body = await req.json();
     const { problemId, mode, language, testcases, code, time_limit, memory_limit }=body;
     const effectiveTimeLimit = Number(time_limit) || 2000;

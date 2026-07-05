@@ -7,7 +7,7 @@ services:
       - "5433:5432"
     environment:
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: leetclone
+      POSTGRES_DB: judgecode
     restart: unless-stopped
 
   redis:

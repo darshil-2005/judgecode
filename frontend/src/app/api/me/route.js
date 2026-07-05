@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const { db, users } = require('@judgecode/backend');
+const { eq } = require('drizzle-orm');
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -20,7 +22,9 @@ export async function GET(req) {
 
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    return Response.json({ user: decoded });
+    const userRows = await db.select().from(users).where(eq(users.id, decoded.userId)).limit(1);
+    if (userRows.length === 0) return Response.json({ error: 'User not found' }, { status: 401 });
+    return Response.json({ user: userRows[0] });
   } catch (err) {
     return Response.json({ error: 'Invalid or expired token' }, { status: 401 });
   }
